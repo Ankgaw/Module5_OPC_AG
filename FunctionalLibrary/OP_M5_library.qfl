@@ -1,0 +1,93 @@
+﻿Function Register(fname,lname,email,telephone,password,confirmpassword)
+systemutil.Run(Environment("ENV_OP_M5"))
+
+Browser("Your Store").Page("Your Store").WebElement("My Account").Check CheckPoint("My Account")
+
+Browser("Your Store").Page("Your Store").Link("My Account").Click
+
+Browser("Your Store").Page("Your Store").Link("Register").WaitProperty "abs_x", True, 30000
+
+Browser("Your Store").Page("Your Store").Link("Register").Click
+Browser("Register Account").Page("Register Account").WebEdit("firstname").Set fname
+Browser("Register Account").Page("Register Account").WebEdit("lastname").Set lname
+Browser("Register Account").Page("Register Account").WebEdit("email").Set email
+Browser("Register Account").Page("Register Account").WebEdit("telephone").Set telephone
+Browser("Register Account").Page("Register Account").WebEdit("password").Set password
+Browser("Register Account").Page("Register Account").WebEdit("confirm").Set confirmpassword
+Browser("Register Account").Page("Register Account").WebRadioGroup("newsletter").Select "1"
+Browser("Register Account").Page("Register Account").WebCheckBox("agree").Set "ON"
+Browser("Register Account").Page("Register Account").WebButton("Continue").Click
+
+name=Browser("Your Account Has Been").Page("Your Account Has Been").WebButton("Continue").GetROProperty("name")
+msgbox name
+
+Browser("Your Account Has Been").Page("Your Account Has Been").WebButton("Continue").Click
+Browser("My Account").Page("My Account").Link("My Account").Click
+Browser("My Account").Page("My Account").Link("Logout").Click	
+
+If Browser("Your Store").Exist(3) Then
+		Reporter.ReportEvent micPass, "Register","Register successful"
+		else
+		Reporter.ReportEvent micFail, "Register","Register unsuccessful"
+	End If
+	
+End Function
+
+Function ForgotPassword()
+
+Browser("Account Logout").Page("Account Logout").Link("My Account").Click
+Browser("Account Logout").Page("Account Logout").Link("Login").Click
+Browser("Account Login").Page("Account Login").Link("Forgotten Password").Click
+Browser("Forgot Your Password?").Page("Forgot Your Password?").WebEdit("email").Set "ankigawande01@gmail.com"
+Browser("Forgot Your Password?").Page("Forgot Your Password?").WebButton("Continue").Click
+
+If Browser("Your Store").Exist(3) Then
+		Reporter.ReportEvent micPass, "ForgotPassword","ForgotPassword successful"
+		else
+		Reporter.ReportEvent micFail, "ForgotPassword","ForgotPassword unsuccessful"
+	End If
+
+End Function
+
+Function Login(Email1,Password1)
+
+Browser("Account Login").Page("Account Login").Link("My Account").Click
+Browser("Account Login").Page("Account Login").Link("Login").Click
+Browser("Account Login").Page("Account Login").WebEdit("email").Set Email1
+Browser("Account Login").Page("Account Login").WebEdit("password").Set Password1
+Browser("Account Login").Page("Account Login").WebButton("Login").Click
+Browser("Account Login").Page("Account Login").Link("Logout").Click
+
+If Browser("Your Store").Exist(3) Then
+		Reporter.ReportEvent micPass, "Login","Login successful"
+		else
+		Reporter.ReportEvent micFail, "Login","Login unsuccessful"
+	End If
+
+End Function
+
+Function EditDetails()
+
+Browser("Account Logout").Page("Account Logout").Link("My Account").Click
+Browser("Account Logout").Page("Account Logout").Link("Login").Click
+Browser("Account Login").Page("Account Login").WebEdit("email").Set "ankigawande01@gmail.com"
+Browser("Account Login").Page("Account Login").WebEdit("password").SetSecure "62503b63ae620c3c9507f4c60e666ea8"
+Browser("Account Login").Page("Account Login").WebButton("Login").Click
+Browser("My Account").Page("My Account").Link("Edit your account information").Click
+Browser("My Account Information").Page("My Account Information").Link("Back").Click
+Browser("My Account").Page("My Account").Link("Change your password").Click
+Browser("Change Password").Page("Change Password").Link("Back").Click
+Browser("My Account").Page("My Account").Link("Modify your address book").Click
+Browser("Address Book").Page("Address Book").Link("Back").Click
+Browser("My Account").Page("My Account").Link("Modify your wish list").Click
+Browser("My Wish List").Page("My Wish List").WebButton("Continue").Click
+Browser("My Account").Page("My Account").Link("My Account").Click
+Browser("My Account").Page("My Account").Link("Logout").Click
+
+If Browser("Your Store").Exist(3) Then
+		Reporter.ReportEvent micPass, "EditDetails","EditDetails successful"
+		else
+		Reporter.ReportEvent micFail, "EditDetails","EditDetails unsuccessful"
+	End If
+
+End Function
